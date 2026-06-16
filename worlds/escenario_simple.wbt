@@ -22,11 +22,13 @@ RectangleArena {
 WoodenBox {
   translation 0 0.05 0.3
   name "wooden box(2)"
+  size 0.6 0.6 0.6
 }
 WoodenBox {
   translation 0.95 0.05 0.3
   rotation 1 0 0 4.692820414042842e-06
   name "wooden box(1)"
+  size 0.6 0.6 0.6
 }
 E-puck {
   hidden position_0_0 814.7458984633469
@@ -36,7 +38,11 @@ E-puck {
   translation 0.11647 0.881111 -9.16621e-05
   rotation -0.00030543374244709114 -0.0002596864927284584 -0.9999999196365741 1.6150914722134857
   controller "controlador_navegacion_global"
+  controllerArgs [
+    "escenario_simple"
+  ]
 }
 WoodenBox {
   translation -0.99 0.05 0.3
+  size 0.6 0.6 0.6
 }

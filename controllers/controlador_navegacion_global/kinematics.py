@@ -1,8 +1,6 @@
 import math
-
-# Parámetros físicos del e-puck (medidas en metros, velocidad en rad/s)
 L = 0.052     # distancia entre ruedas
-R = 0.0205    # radio de rueda
+R = 0.02      # radio de rueda
 MAX_SPEED = 6.28  # velocidad angular máxima de rueda
 
 

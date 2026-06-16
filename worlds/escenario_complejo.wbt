@@ -5,13 +5,13 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/WoodenBox.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/TrafficCone.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/samples/contests/tower_of_hanoi/protos/YoubotFlag.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.083271899016762 0.9939488366752371 0.07163449522461322 1.7267980229860285
-  position 0.25794732666043396 -0.27616374122315185 3.6005278440665975
+  orientation 0.05913937558479648 0.9948608468038899 -0.0821853378169567 1.2523894564557654
+  position -5.099439421692184 -1.377124629720882 13.77370221716285
 }
 TexturedBackground {
 }
@@ -20,70 +20,63 @@ TexturedBackgroundLight {
 RectangleArena {
   floorSize 5 5
 }
-TrafficCone {
-  translation -0.61 0 0
-  scale 0.2
+YoubotFlag {
+  translation 2.14 1.66 0
 }
 WoodenBox {
-  translation -1.2 0.21 0.09
-  name "caja(4)"
-  size 0.5 0.2 0.2
+  translation -1.6 1.325 0.15
+  name "wall1_upper"
+  size 0.2 2.35 0.3
 }
 WoodenBox {
-  translation -1.76 0.33 0.09
-  name "caja(3)"
-  size 0.6 0.2 0.2
+  translation -1.6 -1.325 0.15
+  name "wall1_lower"
+  size 0.2 2.35 0.3
 }
 WoodenBox {
-  translation -1.65 -0.12 0.09
-  name "caja"
-  size 0.2 0.2 0.2
+  translation -0.8 1.825 0.15
+  name "wall2_upper"
+  size 0.2 1.35 0.3
 }
 WoodenBox {
-  translation -0.86 -0.18 0.09
-  name "caja(6)"
-  size 0.2 0.6 0.2
+  translation -0.8 -0.825 0.15
+  name "wall2_lower"
+  size 0.2 3.35 0.3
 }
 WoodenBox {
-  translation -0.65 0.23 0.09
-  rotation 0 0 1 1.5708
-  name "caja(10)"
-  size 0.2 0.6 0.2
+  translation 0 1.015 0.15
+  name "wall3_upper"
+  size 0.2 3.15 0.3
 }
 WoodenBox {
-  translation -0.34 -0.27 0.09
-  name "caja(9)"
-  size 0.2 0.8 0.2
+  translation 0 -1.725 0.15
+  name "wall3_lower"
+  size 0.2 1.55 0.3
 }
 WoodenBox {
-  translation -1.36 -0.19 0.09
-  name "caja(5)"
-  size 0.4 0.2 0.2
+  translation 0.8 1.625 0.15
+  name "wall4_upper"
+  size 0.2 1.75 0.3
 }
 WoodenBox {
-  translation -1.26 -0.49 0.09
-  rotation 0 0 1 1.5708
-  name "caja(7)"
-  size 0.4 0.2 0.2
+  translation 0.8 -1.025 0.15
+  name "wall4_lower"
+  size 0.2 2.95 0.3
 }
 WoodenBox {
-  translation -0.8 -0.77 0.09
-  rotation 0 0 1 -3.1415853071795863
-  name "caja(8)"
-  size 0.8 0.2 0.2
+  translation 1.6 1.175 0.15
+  name "wall5_upper"
+  size 0.2 2.65 0.3
 }
 WoodenBox {
-  translation -1.85 -0.23 0.09
-  name "caja(1)"
-  size 0.2 0.2 0.2
-}
-WoodenBox {
-  translation -2.06 0.12 0.09
-  name "caja(2)"
-  size 0.2 0.5 0.2
+  translation 1.6 -1.475 0.15
+  name "wall5_lower"
+  size 0.2 2.05 0.3
 }
 E-puck {
-  translation -1.84215 -0.0692257 -0.011377
-  rotation -0.8512626903867883 -0.06461107650027056 -0.5207468105988969 -0.30699530717958634
+  translation -2.2 0 0
   controller "controlador_navegacion_global"
+  controllerArgs [
+    "escenario_complejo"
+  ]
 }
