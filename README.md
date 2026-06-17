@@ -86,8 +86,14 @@ Falta también registrar `(x, y)` estimado en cada paso (no se loguea actualment
 ## 8. Capturas, gráficos y video
 
 - Capturas cenitales de ambos escenarios: ver sección 4 (`Image/Imagen simple.png`, `Image/Imagen Complejo.png`).
-- TODO: gráfico ruta planificada vs. trayectoria ejecutada
+- Gráfico ruta planificada vs. trayectoria ejecutada
 ![Gráfico1](Image/Gráfico1.png)
+- Gráfico tiempo hasta alcanzar la meta
+![Gráfico2](Image/Gráfico2.png)
+- Gráfico diferencia ruta planificada vs ejecutada 
+![Gráfico3](Image/Gráfico3.png)
+- Gráfico factor de escala: complejo vs simple
+![Gráfico4](Image/Gráfico4.png)
 - Video demostrativo (ejecución completa, inicio a meta):
   - [Escenario simple](https://drive.google.com/file/d/1xoUUvC64dIvH_BtWeafztG8QDLntDhwk/view?usp=sharing)
   - [Escenario complejo](https://drive.google.com/file/d/1btlqDcIMntdpaV1ImWIlnB6zs8sf2AmE/view?usp=sharing)
@@ -101,4 +107,63 @@ Falta también registrar `(x, y)` estimado en cada paso (no se loguea actualment
 
 ## 10. Conclusiones, limitaciones y mejoras
 
-TODO: completar al final, una vez evaluados ambos escenarios. Comentar al menos: estabilidad de la odometría (deriva acumulada), casos donde la evitación reactiva entra en conflicto con la ruta planificada, y posibles mejoras (replanificación dinámica, fusión con más sensores, etc.).
+El sistema implementado cumple el objetivo central del proyecto: el robot navega de forma
+autónoma en ambos escenarios sin colisiones, siguiendo rutas planificadas por A* sobre una
+grilla de ocupación, y alcanza la meta en el 100 % de las corridas realizadas (3/3 por escenario).
+
+### Estabilidad de la odometría y deriva acumulada
+
+La odometría integrativa funciona correctamente en entornos deterministas como Webots, donde
+no existe ruido real en los encoders ni perturbaciones externas. En ambos escenarios la pose
+estimada al llegar a la meta es consistente con la posición real del robot. Sin embargo, este
+enfoque acumula error a lo largo del tiempo: cada paso de integración propaga el error anterior,
+por lo que rutas largas —como el escenario complejo (≈9.5 m)— presentarán mayor deriva que
+rutas cortas. En entornos físicos reales este efecto se volvería dominante en pocos metros,
+haciendo que el robot pierda el rastro de su posición sin corrección externa. La trayectoria
+ejecutada en el escenario complejo fue +0.10 m más larga que la planificada (en el simple fue
+−0.16 m), diferencia coherente con las correcciones introducidas por la evitación reactiva al
+cruzar puertas estrechas, y no con deriva pura de odometría.
+
+### Conflicto entre evitación reactiva y ruta planificada
+
+La arquitectura actual es de dos niveles desacoplados: la evitación reactiva toma el control
+total del robot cuando se activa, sin conocer la ruta global, y el seguidor de ruta retoma el
+mando cuando la evitación se desactiva. Esto genera dos clases de conflicto observadas durante
+las pruebas:
+
+1. **Giros innecesarios en pasillos estrechos.** Al cruzar las puertas del escenario complejo,
+   los sensores laterales detectan las paredes y pueden activar la FSM de evitación, generando
+   maniobras de retroceso o giro que alejan brevemente al robot del waypoint activo. El robot
+   recupera la trayectoria al volver al estado IDLE, pero el desvío se traduce en los +0.10 m
+   extra de trayectoria.
+
+2. **Pérdida de orientación global post-maniobra.** Tras una secuencia BACKOFF → TURN → ESCAPE,
+   el robot puede quedar apuntando en una dirección que no es la óptima hacia el siguiente
+   waypoint, obligando al seguidor a corregir el rumbo con un giro adicional. Este comportamiento
+   es más frecuente en el escenario complejo que en el simple.
+
+### Posibles mejoras
+
+- **Replanificación dinámica.** Añadir una capa de replanificación que vuelva a ejecutar A*
+  desde la pose estimada actual cuando la evitación activa un cierto número de veces seguidas.
+  Esto permitiría detectar obstrucciones no representadas en el mapa inicial y encontrar
+  rutas alternativas en lugar de forcejear con la misma zona.
+
+- **Integración de la evitación reactiva en el seguidor de ruta.** Reemplazar la conmutación
+  binaria (reactivo **o** global) por un campo potencial o DWA (Dynamic Window Approach) que
+  combine atracción hacia el waypoint y repulsión de obstáculos en una sola ley de control,
+  eliminando los conflictos de prioridad actuales.
+
+- **Fusión con más sensores.** Incorporar todos los sensores IR del e-puck (ps0–ps7) para una
+  percepción lateral completa, y considerar el uso de un sensor de posición absoluta
+  (GPS simulado en Webots, o landmarks conocidos) para corregir la deriva odométrica
+  periódicamente mediante un filtro de Kalman extendido (EKF).
+
+- **Exploración del mapa con SLAM simplificado.** Una extensión natural del proyecto sería
+  construir la grilla de ocupación en tiempo real a partir de las lecturas IR y la odometría,
+  en lugar de cargarla estáticamente desde el escenario. Esto abriría la puerta a la Línea B y
+  permitiría operar en entornos desconocidos.
+
+- **Ajuste adaptativo de tolerancias y velocidades.** Reducir la tolerancia de meta y la
+  velocidad de crucero al acercarse a waypoints en pasillos estrechos, y aumentarlas en
+  espacios abiertos, mejoraría tanto la precisión del seguimiento como el tiempo total.
