@@ -1,6 +1,6 @@
 # Proyecto Final: Navegación Autónoma con Planificación de Rutas en Webots
 
-Robótica y Sistemas Autónomos 2026-01 — ICI 4150
+Robótica y Sistemas Autónomos 2026-01, ICI 4150
 
 **Integrantes:**
 - Joaquín Fuenzalida
@@ -23,12 +23,12 @@ Diseñar e implementar en Webots un robot diferencial (e-puck) capaz de planific
 - **Sensores:**
   - 8 sensores de proximidad infrarrojos `ps0`–`ps7`, usados para detección frontal y lateral de obstáculos.
   - Encoders de rueda (`left wheel sensor`, `right wheel sensor`), usados para odometría.
-- **Filtrado:** la lectura frontal cruda se suaviza con un filtro EMA (`α = 0.3`) y se fusiona con un filtro de Kalman 1D (predicción a partir del avance odométrico `delta_s`, corrección con la medición IR) para estimar la distancia frontal `d_hat` de forma más estable — mismo esquema usado en el Laboratorio 2.
+- **Filtrado:** la lectura frontal cruda se suaviza con un filtro EMA (`α = 0.3`) y se fusiona con un filtro de Kalman 1D (predicción a partir del avance odométrico `delta_s`, corrección con la medición IR) para estimar la distancia frontal `d_hat` de forma más estable (mismo esquema usado en el Laboratorio 2).
 
 ## 4. Escenarios de prueba
 
 ### 4.1. Escenario simple (`escenario_simple.wbt`)
-Un único obstáculo: 3 cajas de madera pegadas entre sí (sin huecos), formando una pared continua de 1.8 m de largo en `y ≈ 0.05`. El robot inicia en `(0.11647, 0.881111)`, sobre la pared, y la meta está en `(0.0, -1.5)`, debajo — como la pared bloquea el paso directo, el A* debe rodear uno de sus extremos, generando la maniobra de "vuelta en U" planteada para este escenario.
+Un único obstáculo: 3 cajas de madera pegadas entre sí (sin huecos), formando una pared continua de 1.8 m de largo en `y ≈ 0.05`. El robot inicia en `(0.11647, 0.881111)`, sobre la pared, y la meta está en `(0.0, -1.5)`, debajo. Como la pared bloquea el paso directo, el A* debe rodear uno de sus extremos, generando la maniobra de "vuelta en U" planteada para este escenario.
 
 ![Escenario simple](Image/Imagen%20simple.png)
 
@@ -44,7 +44,7 @@ TODO: si se desea, agregar también el grafo/grilla de ocupación generado.
 1. **Grilla de ocupación** ([occupancy_grid.py](controllers/controlador_navegacion_global/occupancy_grid.py)): discretiza el plano en celdas de `0.05 m`. Cada obstáculo rectangular del escenario se marca como ocupado, inflado por el radio del robot más un margen de seguridad (`ROBOT_RADIUS + SAFETY_MARGIN = 0.077 m`), de modo que cualquier celda libre es alcanzable sin colisión.
 2. **A\*** ([planner.py](controllers/controlador_navegacion_global/planner.py)): búsqueda sobre la grilla con vecindad de 8 conexiones, heurística euclidiana, y un término adicional de penalización por baja "clearance" (distancia al obstáculo más cercano, vía BFS multi-fuente) para que la ruta prefiera el centro de los pasillos en vez de rozar las paredes. La ruta resultante se simplifica eliminando waypoints colineales.
 3. **Seguimiento de ruta** ([path_follower.py](controllers/controlador_navegacion_global/path_follower.py)): control proporcional de rumbo (`K_HEADING = 1.0`) hacia el siguiente waypoint, con velocidad de crucero `0.08 m/s` escalada por `cos(error_rumbo)`. Avanza de waypoint en waypoint hasta entrar en tolerancia de meta (`0.20 m`).
-4. **Evitación reactiva** ([obstacle_avoidance.py](controllers/controlador_navegacion_global/obstacle_avoidance.py)): máquina de estados (`IDLE → BACKOFF → TURN_LEFT/RIGHT → ESCAPE → IDLE`, con `REVERSE` si queda atrapado) que toma el control de los motores cuando la distancia frontal filtrada supera un umbral, independientemente de la ruta planificada — corrige desviaciones de odometría o detecta obstáculos no representados en el mapa.
+4. **Evitación reactiva** ([obstacle_avoidance.py](controllers/controlador_navegacion_global/obstacle_avoidance.py)): máquina de estados (`IDLE → BACKOFF → TURN_LEFT/RIGHT → ESCAPE → IDLE`, con `REVERSE` si queda atrapado) que toma el control de los motores cuando la distancia frontal filtrada supera un umbral, independientemente de la ruta planificada, corrigiendo desviaciones de odometría o detectando obstáculos no representados en el mapa.
 5. **Odometría** ([kinematics.py](controllers/controlador_navegacion_global/kinematics.py)): integra los encoders de rueda paso a paso para estimar `(x, y, θ)`, usada tanto por el seguidor de ruta como por el filtro de Kalman de los sensores IR.
 
 ### Diagrama de flujo (controlador, por paso de simulación)
@@ -54,7 +54,7 @@ leer encoders → odometría (x, y, θ, Δs)
         ↓
 leer sensores IR → filtro EMA + Kalman (d_hat)
         ↓
-¿evitación de obstáculos activa? ──sí──→ aplicar (v_izq, v_der) de la FSM de evitación
+¿evitación de obstáculos activa? --(sí)--> aplicar (v_izq, v_der) de la FSM de evitación
         │no
         ↓
 seguidor de ruta: calcular (v, ω) hacia el waypoint actual
@@ -74,7 +74,7 @@ aplicar velocidades a los motores
 
 ## 7. Resultados y métricas
 
-TODO — completar después de correr ambos escenarios (recomendado: ≥3 ejecuciones por escenario para sacar el % de éxito). El controlador ya imprime por consola, en cada ejecución:
+TODO: completar después de correr ambos escenarios (recomendado: ≥3 ejecuciones por escenario para sacar el % de éxito). El controlador ya imprime por consola, en cada ejecución:
 - Largo de la ruta planificada por A* (`planner.path_length`).
 - Tiempo de simulación hasta alcanzar la meta.
 - Distancia recorrida real (acumulada por odometría).
@@ -92,19 +92,19 @@ Tabla sugerida (una fila por escenario, promediando varias corridas):
 | Colisiones | 0 | 0 |
 | % de ejecuciones exitosas | 100% (3/3) | 100% (3/3) |
 
-> Nota: ambos escenarios se corrieron 3 veces (mismas condiciones iniciales) y dieron resultados idénticos en las 3 — el sistema es determinista en este entorno (sin ruido en sensores ni perturbaciones), así que las 3 corridas valen como 3/3 exitosas, no como promedio de valores distintos.
+> Nota: ambos escenarios se corrieron 3 veces (mismas condiciones iniciales) y dieron resultados idénticos en las 3. El sistema es determinista en este entorno (sin ruido en sensores ni perturbaciones), así que las 3 corridas valen como 3/3 exitosas, no como promedio de valores distintos.
 
 **Comparación:** el escenario complejo requiere una ruta ~2.7× más larga (9.42 vs. 3.51 m) y ~3× más tiempo (127.2 vs. 42.7 s) que el simple, consistente con tener que cruzar 5 corredores con puertas angostas en vez de rodear un único obstáculo. El signo de la diferencia ruta vs. trayectoria también cambia: en el complejo la trayectoria ejecutada es *más larga* que la planificada (+0.10 m, por las correcciones de la evitación reactiva al pasar puertas estrechas), mientras que en el simple es *más corta* (-0.16 m), porque el robot entra en la tolerancia de meta (`GOAL_TOLERANCE = 0.20 m`) antes de completar el último tramo planificado y se detiene ahí.
 
-Falta también: registrar `(x, y)` estimado en cada paso (no se loguea actualmente, solo la pose final) si quieren graficar ruta planificada vs. trayectoria real — se puede agregar un logger CSV simple en el loop principal si lo necesitan.
+Falta también registrar `(x, y)` estimado en cada paso (no se loguea actualmente, solo la pose final) si quieren graficar ruta planificada vs. trayectoria real. Se puede agregar un logger CSV simple en el loop principal si lo necesitan.
 
 ## 8. Capturas, gráficos y video
 
 - Capturas cenitales de ambos escenarios: ver sección 4 (`Image/Imagen simple.png`, `Image/Imagen Complejo.png`).
 - TODO: gráfico ruta planificada vs. trayectoria ejecutada (pendiente, otro integrante lo está haciendo).
 - Video demostrativo (ejecución completa, inicio a meta):
-  - [Escenario simple](Video/escenario_simple.mp4)
-  - [Escenario complejo](Video/escenario_complejo.mp4)
+  - [Escenario simple](https://drive.google.com/file/d/1xoUUvC64dIvH_BtWeafztG8QDLntDhwk/view?usp=sharing)
+  - [Escenario complejo](https://drive.google.com/file/d/1btlqDcIMntdpaV1ImWIlnB6zs8sf2AmE/view?usp=sharing)
 
 ## 9. Instrucciones de ejecución
 
@@ -115,4 +115,4 @@ Falta también: registrar `(x, y)` estimado en cada paso (no se loguea actualmen
 
 ## 10. Conclusiones, limitaciones y mejoras
 
-TODO — completar al final, una vez evaluados ambos escenarios. Comentar al menos: estabilidad de la odometría (deriva acumulada), casos donde la evitación reactiva entra en conflicto con la ruta planificada, y posibles mejoras (replanificación dinámica, fusión con más sensores, etc.).
+TODO: completar al final, una vez evaluados ambos escenarios. Comentar al menos: estabilidad de la odometría (deriva acumulada), casos donde la evitación reactiva entra en conflicto con la ruta planificada, y posibles mejoras (replanificación dinámica, fusión con más sensores, etc.).
