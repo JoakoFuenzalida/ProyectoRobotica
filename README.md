@@ -38,7 +38,9 @@ TODO: completar esta sección cuando el escenario quede cerrado. Debe incluir:
 ### 4.2. Escenario complejo (`escenario_complejo.wbt`)
 Laberinto simple de 5 "calles" verticales separadas por paredes (`WoodenBox`), cada una con una puerta de paso (offset distinto en cada pared), de modo que el robot debe avanzar y desviarse calle por calle hasta alcanzar la meta marcada con `YoubotFlag` en `(2.14, 1.66)`. El robot inicia en `(-2.2, 0.0)` y debe llegar únicamente hasta la meta (sin mapear ni explorar el resto del entorno).
 
-TODO: agregar captura cenital del laberinto y, si se desea, el grafo/grilla de ocupación generado.
+![Escenario complejo](Image/Imagen%20Complejo.png)
+
+TODO: si se desea, agregar también el grafo/grilla de ocupación generado.
 
 ## 5. Algoritmo implementado
 
@@ -85,13 +87,15 @@ Tabla sugerida (una fila por escenario, promediando varias corridas):
 
 | Métrica | Escenario simple | Escenario complejo |
 |---|---|---|
-| Tiempo hasta la meta (s) | | |
-| Longitud ruta planificada (m) | | |
-| Longitud trayectoria ejecutada (m) | | |
-| Diferencia ruta vs. trayectoria (m) | | |
+| Tiempo hasta la meta (s) | | 127.2 (corrida 1) |
+| Longitud ruta planificada (m) | | 9.42 (corrida 1) |
+| Longitud trayectoria ejecutada (m) | | 9.52 (corrida 1) |
+| Diferencia ruta vs. trayectoria (m) | | 0.10 (corrida 1) |
 | N° de activaciones de evitación de obstáculos | | |
 | Colisiones | | |
 | % de ejecuciones exitosas | | |
+
+> Nota: la fila "escenario complejo" tiene un solo dato de muestra (corrida 1, 27 waypoints). Faltan ≥2 corridas más por escenario para promediar y sacar el % de éxito.
 
 Falta también: registrar `(x, y)` estimado en cada paso (no se loguea actualmente, solo la pose final) si quieren graficar ruta planificada vs. trayectoria real — se puede agregar un logger CSV simple en el loop principal si lo necesitan.
 
