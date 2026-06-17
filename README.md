@@ -86,7 +86,8 @@ Falta también registrar `(x, y)` estimado en cada paso (no se loguea actualment
 ## 8. Capturas, gráficos y video
 
 - Capturas cenitales de ambos escenarios: ver sección 4 (`Image/Imagen simple.png`, `Image/Imagen Complejo.png`).
-- TODO: gráfico ruta planificada vs. trayectoria ejecutada (pendiente, otro integrante lo está haciendo).
+- TODO: gráfico ruta planificada vs. trayectoria ejecutada
+![Gráfico1](Image/Gráfico1.png)
 - Video demostrativo (ejecución completa, inicio a meta):
   - [Escenario simple](https://drive.google.com/file/d/1xoUUvC64dIvH_BtWeafztG8QDLntDhwk/view?usp=sharing)
   - [Escenario complejo](https://drive.google.com/file/d/1btlqDcIMntdpaV1ImWIlnB6zs8sf2AmE/view?usp=sharing)
