@@ -49,22 +49,7 @@ TODO: si se desea, agregar también el grafo/grilla de ocupación generado.
 
 ### Diagrama de flujo (controlador, por paso de simulación)
 
-```
-leer encoders → odometría (x, y, θ, Δs)
-        ↓
-leer sensores IR → filtro EMA + Kalman (d_hat)
-        ↓
-¿evitación de obstáculos activa? --(sí)--> aplicar (v_izq, v_der) de la FSM de evitación
-        │no
-        ↓
-seguidor de ruta: calcular (v, ω) hacia el waypoint actual
-        ↓
-convertir (v, ω) → (v_izq, v_der) [cinemática diferencial]
-        ↓
-aplicar velocidades a los motores
-        ↓
-¿meta alcanzada? → reportar tiempo, pose estimada y distancia recorrida
-```
+![Diagrama de flujo](Image/Diagrama de flujo.png)
 
 ## 6. Relación con los Laboratorios 1 y 2
 
