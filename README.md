@@ -49,7 +49,7 @@ TODO: si se desea, agregar también el grafo/grilla de ocupación generado.
 
 ### Diagrama de flujo (controlador, por paso de simulación)
 
-![Diagrama de flujo](Image/Diagrama de flujo.png)
+![Diagrama de flujo](Image/Diagrama%20de%20flujo.png)
 
 ## 6. Relación con los Laboratorios 1 y 2
 
