@@ -9,8 +9,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.1706703587198558 -0.7249980231612724 0.6672701814607657 5.6048807604175925
-  position -2.236307798977231 1.999154486581684 1.5023541716097313
+  orientation 0.4574972641525098 0.4976724766699057 -0.7368977943095032 1.933288001601047
+  position 0.5122317995734103 2.7347747684077044 5.669353890210334
 }
 TexturedBackground {
 }
@@ -20,29 +20,25 @@ RectangleArena {
   floorSize 5 5
 }
 WoodenBox {
-  translation 0 0.05 0.3
-  name "wooden box(2)"
+  translation -0.6 0.05 0.3
+  name "wooden box(0)"
   size 0.6 0.6 0.6
 }
 WoodenBox {
-  translation 0.95 0.05 0.3
-  rotation 1 0 0 4.692820414042842e-06
+  translation 0 0.05 0.3
   name "wooden box(1)"
   size 0.6 0.6 0.6
 }
+WoodenBox {
+  translation 0.6 0.05 0.3
+  name "wooden box(2)"
+  size 0.6 0.6 0.6
+}
 E-puck {
-  hidden position_0_0 814.7458984633469
-  hidden position_0_1 910.9242088926125
-  hidden rotation_1 0 -1 0 2.0681914699993804
-  hidden rotation_2 0 1 0 6.145524658752003
   translation 0.11647 0.881111 -9.16621e-05
-  rotation -0.00030543374244709114 -0.0002596864927284584 -0.9999999196365741 1.6150914722134857
+  rotation 0 0 -1 1.6150914722134857
   controller "controlador_navegacion_global"
   controllerArgs [
     "escenario_simple"
   ]
-}
-WoodenBox {
-  translation -0.99 0.05 0.3
-  size 0.6 0.6 0.6
 }

@@ -12,9 +12,10 @@ SCENARIOS = {
         'goal': (0.0, -1.5),
         'bounds': (-2.5, 2.5, -2.5, 2.5),
         'obstacles': [
+            # pared continua (3 cajas pegadas, sin huecos) para forzar rodeo en U
+            (-0.6, 0.05, 0.3, 0.3),
             (0.0, 0.05, 0.3, 0.3),
-            (0.95, 0.05, 0.3, 0.3),
-            (-0.99, 0.05, 0.3, 0.3),
+            (0.6, 0.05, 0.3, 0.3),
         ],
     },
     'escenario_complejo': {

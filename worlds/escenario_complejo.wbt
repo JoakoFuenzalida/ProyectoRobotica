@@ -10,8 +10,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.05913937558479648 0.9948608468038899 -0.0821853378169567 1.2523894564557654
-  position -5.099439421692184 -1.377124629720882 13.77370221716285
+  orientation -0.01697908618135917 0.9994799196922015 -0.027415338125156608 1.250066690050733
+  position -4.6584646095215945 -0.11222235372736211 13.614018919713226
 }
 TexturedBackground {
 }
@@ -74,7 +74,8 @@ WoodenBox {
   size 0.2 2.05 0.3
 }
 E-puck {
-  translation -2.2 0 0
+  translation -2.2 0.0 -7.133017582100672e-05
+  rotation 0 0 -1 0
   controller "controlador_navegacion_global"
   controllerArgs [
     "escenario_complejo"
